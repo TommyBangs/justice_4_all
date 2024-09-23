@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "954358522952",
+    "project_id": "justice4all-67568",
+    "storage_bucket": "justice4all-67568.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954358522952:android:97316c1403923a3259e47d",
+        "android_client_info": {
+          "package_name": "com.example.justice_4_all"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2hI-0ZC6Wa65uxQEglRR720bETHq2AmA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

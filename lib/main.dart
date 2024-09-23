@@ -1,35 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:justice_4_all/modules/login/Welcome.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Justice 4 All',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'Open Sans',
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(fontWeight: FontWeight.w500),
-          bodyMedium: TextStyle(fontWeight: FontWeight.w500),
+        primaryColor: Color(0xFF002341),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0xFFC0C0C0),
+          foregroundColor: Colors.black,
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            textStyle: const TextStyle(
-              fontFamily: 'Open Sans',
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        useMaterial3: true,
       ),
       home: const WelcomePage(),
-      debugShowCheckedModeBanner: false,
     );
   }
 }

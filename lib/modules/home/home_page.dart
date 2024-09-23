@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:justice_4_all/modules/chat/chatbot_page.dart';
 import 'package:justice_4_all/modules/profile/profile_screen.dart';
+import 'package:justice_4_all/modules/bottomnavbar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,7 +30,6 @@ class _HomePageState extends State<HomePage> {
         MaterialPageRoute(builder: (context) => ProfileScreen()),
       );
     }
-    // You can add navigation for other tabs if needed
   }
 
   String _getGreeting() {
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: false,
         title: Text('Home',
             style: TextStyle(color: Colors.black, fontFamily: 'Noto Serif')),
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFFC0C0C0), // Updated to #C0C0C0
         elevation: 0,
         actions: [
           IconButton(
@@ -83,7 +83,10 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+      ),
     );
   }
 
@@ -291,36 +294,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildBottomNavigationBar() {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: Color(0xFFC0C0C0),
-      selectedItemColor: Color(0xFF002341),
-      unselectedItemColor: Color(0xFF002341),
-      currentIndex: _selectedIndex,
-      onTap: _onItemTapped,
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(_selectedIndex == 0 ? Icons.home : Icons.home_outlined),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.chat_bubble_outline),
-          label: 'Chat',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.book_outlined),
-          label: 'Resources',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person_outline),
-          activeIcon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-      ],
     );
   }
 }

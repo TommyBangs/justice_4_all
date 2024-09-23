@@ -190,7 +190,7 @@ class LoginPage extends StatelessWidget {
           if (text == 'Log in') {
             // Navigate to HomePage
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           }
         },

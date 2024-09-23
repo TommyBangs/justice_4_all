@@ -3,7 +3,7 @@ import 'package:justice_4_all/modules/login/login.dart';
 import 'package:justice_4_all/modules/login/signup.dart';
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+  const WelcomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class WelcomePage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Text(
+                  const Text(
                     'Welcome',
                     style: TextStyle(
                       fontFamily: 'Noto Serif',
@@ -60,7 +60,7 @@ class WelcomePage extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 20),
-                            Expanded(
+                            const Expanded(
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,

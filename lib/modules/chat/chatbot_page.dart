@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:justice_4_all/modules/profile/profile_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:justice_4_all/modules/bottomnavbar.dart';
 
 class AIChatScreen extends StatefulWidget {
-  const AIChatScreen({Key? key}) : super(key: key);
+  const AIChatScreen({super.key});
 
   @override
   _AIChatScreenState createState() => _AIChatScreenState();
@@ -14,7 +14,7 @@ class AIChatScreen extends StatefulWidget {
 class _AIChatScreenState extends State<AIChatScreen> {
   final TextEditingController _textController = TextEditingController();
   final List<ChatMessage> _messages = [];
-  int _selectedIndex = 1; // Set to 1 for the Chat tab
+  // Remove the _selectedIndex and _onItemTapped method
 
   // Add your RapidAPI key here
   final String apiKey = 'YOUR_RAPIDAPI_KEY';
@@ -64,33 +64,14 @@ class _AIChatScreenState extends State<AIChatScreen> {
     }
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    if (index == 1) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => AIChatScreen()),
-      );
-    } else if (index == 3) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ProfileScreen()),
-      );
-    }
-    // You can add navigation for other tabs if needed
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xFFC0C0C0),
+        backgroundColor: const Color(0xFFC0C0C0),
         elevation: 0,
         automaticallyImplyLeading: false,
         title: Row(
@@ -99,13 +80,14 @@ class _AIChatScreenState extends State<AIChatScreen> {
             Text(
               'Justice AI',
               style: TextStyle(
-                color: Color(0xFF002341),
+                color: const Color(0xFF002341),
                 fontWeight: FontWeight.bold,
                 fontSize: 20 * textScaleFactor,
               ),
             ),
             CircleAvatar(
-              backgroundImage: AssetImage('assets/images/user_profile.png'),
+              backgroundImage:
+                  const AssetImage('assets/images/user_profile.png'),
               radius: 20 * textScaleFactor,
             ),
           ],
@@ -121,14 +103,25 @@ class _AIChatScreenState extends State<AIChatScreen> {
               itemCount: _messages.length,
             ),
           ),
-          Divider(height: 1.0),
+          const Divider(height: 1.0),
           Container(
             decoration: BoxDecoration(color: Theme.of(context).cardColor),
             child: _buildTextComposer(screenSize, textScaleFactor),
           ),
         ],
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(textScaleFactor),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: 1,
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.pushReplacementNamed(context, '/home');
+          } else if (index == 2) {
+            Navigator.pushReplacementNamed(context, '/resources');
+          } else if (index == 3) {
+            Navigator.pushReplacementNamed(context, '/profile');
+          }
+        },
+      ),
     );
   }
 
@@ -148,11 +141,11 @@ class _AIChatScreenState extends State<AIChatScreen> {
                 hintText: "Send a message",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.0),
-                  borderSide: BorderSide(color: Color(0xFFC0C0C0)),
+                  borderSide: const BorderSide(color: Color(0xFFC0C0C0)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.0),
-                  borderSide: BorderSide(color: Color(0xFF002341)),
+                  borderSide: const BorderSide(color: Color(0xFF002341)),
                 ),
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: screenSize.width * 0.05,
@@ -164,12 +157,12 @@ class _AIChatScreenState extends State<AIChatScreen> {
           SizedBox(width: screenSize.width * 0.02),
           IconButton(
             icon: Icon(Icons.send,
-                color: Color(0xFF002341), size: 24 * textScaleFactor),
+                color: const Color(0xFF002341), size: 24 * textScaleFactor),
             onPressed: () => _handleSubmitted(_textController.text),
           ),
           IconButton(
             icon: Icon(FontAwesomeIcons.microphone,
-                color: Color(0xFF002341), size: 24 * textScaleFactor),
+                color: const Color(0xFF002341), size: 24 * textScaleFactor),
             onPressed: () {
               // Implement voice recording functionality
             },
@@ -178,49 +171,13 @@ class _AIChatScreenState extends State<AIChatScreen> {
       ),
     );
   }
-
-  Widget _buildBottomNavigationBar(double textScaleFactor) {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: Color(0xFFC0C0C0),
-      selectedItemColor: Color(0xFF002341),
-      unselectedItemColor: Color(0xFF002341),
-      currentIndex: _selectedIndex,
-      onTap: _onItemTapped,
-      selectedFontSize: 14 * textScaleFactor,
-      unselectedFontSize: 14 * textScaleFactor,
-      iconSize: 24 * textScaleFactor,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined),
-          activeIcon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.chat_bubble_outline),
-          activeIcon: Icon(Icons.chat_bubble),
-          label: 'Chat',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.book_outlined),
-          activeIcon: Icon(Icons.book),
-          label: 'Resources',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person_outline),
-          activeIcon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-      ],
-    );
-  }
 }
 
 class ChatMessage extends StatelessWidget {
   final String text;
   final bool isUser;
 
-  ChatMessage({required this.text, required this.isUser});
+  const ChatMessage({super.key, required this.text, required this.isUser});
 
   @override
   Widget build(BuildContext context) {
@@ -236,9 +193,9 @@ class ChatMessage extends StatelessWidget {
               ? Container(
                   margin: EdgeInsets.only(right: screenSize.width * 0.04),
                   child: CircleAvatar(
+                    radius: 20 * textScaleFactor,
                     child: Text('AI',
                         style: TextStyle(fontSize: 14 * textScaleFactor)),
-                    radius: 20 * textScaleFactor,
                   ),
                 )
               : Container(),
@@ -268,9 +225,9 @@ class ChatMessage extends StatelessWidget {
               ? Container(
                   margin: EdgeInsets.only(left: screenSize.width * 0.04),
                   child: CircleAvatar(
+                    radius: 20 * textScaleFactor,
                     child: Text('You',
                         style: TextStyle(fontSize: 14 * textScaleFactor)),
-                    radius: 20 * textScaleFactor,
                   ),
                 )
               : IconButton(

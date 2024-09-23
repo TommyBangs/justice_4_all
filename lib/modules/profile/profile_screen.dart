@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:justice_4_all/modules/bottomnavbar.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false, // This removes the back button
+        title: Text('Profile',
+            style: TextStyle(color: Colors.black, fontFamily: 'Noto Serif')),
+        backgroundColor: const Color(0xFFC0C0C0), // Updated to #C0C0C0
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Color(0xFF002341)),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.edit, color: Color(0xFF002341)),
-            onPressed: () {
-              // Implement edit profile functionality
-            },
-          ),
-        ],
+        // Add any other AppBar properties or actions you need
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -31,20 +23,32 @@ class ProfileScreen extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: 3,
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.pushReplacementNamed(context, '/home');
+          } else if (index == 1) {
+            Navigator.pushReplacementNamed(context, '/chat');
+          } else if (index == 2) {
+            Navigator.pushReplacementNamed(context, '/resources');
+          }
+        },
+      ),
     );
   }
 
   Widget _buildProfileHeader() {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 50,
             backgroundImage: AssetImage('assets/images/user_profile.png'),
           ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Thomas Anderson',
             style: TextStyle(
               fontSize: 24,
@@ -52,7 +56,7 @@ class ProfileScreen extends StatelessWidget {
               color: Color(0xFF002341),
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'Legal Enthusiast',
             style: TextStyle(
@@ -67,11 +71,11 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _buildProfileOptions(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Account',
             style: TextStyle(
               fontSize: 18,
@@ -79,7 +83,7 @@ class ProfileScreen extends StatelessWidget {
               color: Color(0xFF002341),
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           _buildOptionTile(
             icon: Icons.email,
             title: 'Email',
@@ -91,7 +95,7 @@ class ProfileScreen extends StatelessWidget {
           _buildOptionTile(
             icon: Icons.phone,
             title: 'Phone',
-            subtitle: '+1 (555) 123-4567',
+            subtitle: '+232 76 123 456',
             onTap: () {
               // Implement phone change functionality
             },
@@ -103,8 +107,8 @@ class ProfileScreen extends StatelessWidget {
               // Implement password change functionality
             },
           ),
-          SizedBox(height: 24),
-          Text(
+          const SizedBox(height: 24),
+          const Text(
             'Settings',
             style: TextStyle(
               fontSize: 18,
@@ -112,7 +116,7 @@ class ProfileScreen extends StatelessWidget {
               color: Color(0xFF002341),
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           _buildOptionTile(
             icon: Icons.notifications,
             title: 'Notifications',
@@ -141,20 +145,21 @@ class ProfileScreen extends StatelessWidget {
               // Implement about page
             },
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           Center(
             child: ElevatedButton(
               onPressed: () {
                 // Implement logout functionality
               },
-              child: Text('Log Out'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF002341),
-                padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                backgroundColor: const Color(0xFF002341),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
+              child: Text('Log Out'),
             ),
           ),
         ],
@@ -169,10 +174,10 @@ class ProfileScreen extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     return ListTile(
-      leading: Icon(icon, color: Color(0xFF002341)),
+      leading: Icon(icon, color: const Color(0xFF002341)),
       title: Text(title),
       subtitle: subtitle != null ? Text(subtitle) : null,
-      trailing: Icon(Icons.chevron_right),
+      trailing: const Icon(Icons.chevron_right),
       onTap: onTap,
     );
   }
